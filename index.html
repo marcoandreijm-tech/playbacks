@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Central de Playbacks - Protegido</title>
+<style>
+body{font-family:Arial;background:#0d1117;color:#fff;margin:0}
+header{background:#1f6feb;padding:20px;text-align:center;font-size:26px;font-weight:bold}
+.container{padding:20px;max-width:1100px;margin:auto}
+.card{background:#161b22;margin-bottom:15px;padding:15px;border-radius:10px;box-shadow:0 0 10px #000}
+.card h2{margin:0 0 10px;color:#58a6ff}
+a{color:#2ea043;text-decoration:none;display:block;margin:4px 0}
+a:hover{text-decoration:underline}
+.search{width:100%;padding:10px;margin-bottom:20px;border-radius:8px;border:none}
+
+/* Estilos para o bloqueio */
+#lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0d1117;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.login-box {
+    background: #161b22;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
+    text-align: center;
+}
+.login-box input {
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #30363d;
+    background: #0d1117;
+    color: #fff;
+    margin-bottom: 15px;
+}
+.login-box button {
+    padding: 10px 20px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-box button:hover {
+    background: #2ea043;
+}
+#error-msg {
+    color: #f85149;
+    margin-top: 10px;
+    font-size: 14px;
+}
+#content {
+    display: none;
+}
+</style>
+<script>
+function verificarSenha() {
+    const senhaCorreta = "mano"; // VOCÊ PODE ALTERAR A SENHA AQUI
+    const senhaDigitada = document.getElementById('senha').value;
+    const erro = document.getElementById('error-msg');
+    
+    if (senhaDigitada === senhaCorreta) {
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        // Salva na sessão para não pedir senha toda vez que atualizar a página (opcional)
+        sessionStorage.setItem('acesso_concedido', 'true');
+    } else {
+        erro.innerText = "Senha incorreta! Tente novamente.";
+    }
+}
+
+// Verifica se já fez login nesta sessão
+window.onload = function() {
+    if (sessionStorage.getItem('acesso_concedido') === 'true') {
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    }
+}
+
+function filtrar(){
+ let input=document.getElementById('busca').value.toLowerCase();
+ let cards=document.getElementsByClassName('card');
+ for(let i=0;i<cards.length;i++){
+   let texto=cards[i].innerText.toLowerCase();
+   cards[i].style.display = texto.includes(input)?'block':'none';
+ }
+}
+
+// Permite apertar Enter para entrar
+function checkEnter(e) {
+    if (e.keyCode === 13) {
+        verificarSenha();
+    }
+}
+</script>
+</head>
+<body>
+
+<!-- Tela de Bloqueio -->
+<div id="lock-screen">
+    <div class="login-box">
+        <h2>Acesso Restrito</h2>
+        <p>Digite a senha para acessar os links:</p>
+        <input type="password" id="senha" placeholder="Senha" onkeypress="checkEnter(event)">
+        <br>
+        <button onclick="verificarSenha()">Entrar</button>
+        <div id="error-msg"></div>
+    </div>
+</div>
+
+<!-- Conteúdo Protegido -->
+<div id="content">
+    <header>🎵 Central de Playbacks</header>
+    <div class="container">
+    <input id="busca" class="search" onkeyup="filtrar()" placeholder="🔍 Buscar...">
+    
+    <div class="card">
+    <h2>📂 Todas</h2>
+    <a href="https://drive.google.com/drive/folders/1wuMe8ERljClbSZsiMME9w5U6ZQCSC1ZH" target="_blank">Todos Playbacks</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎤 Arrocha e Seresta</h2>
+    <a href="https://drive.google.com/drive/folders/1zBvSWMdWNaxjFGUDbfigdQncl1tFJIDA" target="_blank">Versão Arrocha</a>
+    <a href="https://drive.google.com/drive/folders/1Ctz0mY9oa1lCLb36CQvD7E8jITsK99eR" target="_blank">Unha Pintada Arrocha</a>
+    </div>
+    
+    <div class="card">
+    <h2>🥁 Axé / Swingueira</h2>
+    <a href="https://drive.google.com/drive/folders/1E5LfqL5icNp0MgE-5E_BK-uMj084xdA5" target="_blank">Bloco de Carnaval</a>
+    <a href="https://drive.google.com/drive/folders/1zWIgYfD1NZx7_0p4MWPXAJLlZPvi191e" target="_blank">Axé Forro Arrocha</a>
+    <a href="https://drive.google.com/drive/folders/1fq7jyqPdDJ6DIqQYei9A6CocIQTv2eSb" target="_blank">Clube do VS Axé</a>
+    </div>
+    
+    <div class="card">
+    <h2>🍺 Buteco e Modão</h2>
+    <a href="https://drive.google.com/drive/folders/1z6cRmUDNpiQD6iDZuOkAtzSv8Wa564-2" target="_blank">Modão</a>
+    </div>
+    
+    <div class="card">
+    <h2>🙏 Católica e Gospel</h2>
+    <a href="https://drive.google.com/drive/folders/1JmPFl1Cxgvnk4AB6xpnxULaq3VitTQRk" target="_blank">Católicas</a>
+    <a href="https://drive.google.com/drive/folders/1zK2XrPzVmf2CPwu09H_Vovwbq-4qGlM5" target="_blank">Gospel</a>
+    </div>
+    
+    <div class="card">
+    <h2>🔥 Forró Atualizado</h2>
+    <a href="https://drive.google.com/drive/folders/1RtRtxW9k83Oj-wME5gH3VzCMk7E6uuUp" target="_blank">Forró das Antigas</a>
+    <a href="https://drive.google.com/drive/folders/1MO9qauAv0DQlkRvrh6x5c1nHk9w0F8yM" target="_blank">Natanzinho Lima</a>
+    <a href="https://drive.google.com/drive/folders/1RQBkXDNMWwuQD7br1kCIsLlBNjVarVgr" target="_blank">Forró</a>
+    <a href="https://drive.google.com/drive/folders/1KDpErlBi2WqOz23lsMmqVmzHMGQ8Cp1H" target="_blank">Clube do Forró - Ultimate Pro 2026</a>
+    </div>
+    
+    <div class="card">
+    <h2>🌎 Internacionais</h2>
+    <a href="https://drive.google.com/drive/folders/1QAaBlnccxX2xl1N5MtPHIUB-Yvw3RTHG" target="_blank">Internacional</a>
+    <a href="https://drive.google.com/drive/folders/11koT2BfHmoDz09eM8y44KD7IjXHTikCU" target="_blank">Rock</a>
+    </div>
+    
+    <div class="card">
+    <h2>🥁 Pagode e Samba</h2>
+    <a href="https://drive.google.com/drive/folders/1pC-PPLJ03Og49QKmE6hrXxgSnz384cjm" target="_blank">Samba e pagode</a>
+    <a href="https://drive.google.com/drive/folders/165QyaXDD8__jQtuIAIbRPWV_9QyeTBgV" target="_blank">Playbacks Pagode</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎧 Piseiro</h2>
+    <a href="https://drive.google.com/drive/folders/1bWOaqt4ruFxFEmxn1c9neCz1NV0EiTzp" target="_blank">Piseiro</a>
+    <a href="https://drive.google.com/drive/folders/1Y5M-vPadwfKIF2qckZNM-glhxt8FthwX" target="_blank">Guilherme Silva</a>
+    <a href="https://drive.google.com/drive/folders/1EZTEo_fdZp8VYlK_7iQqzsW9oSi-h4xS" target="_blank">2 piseiro 2020</a>
+    <a href="https://drive.google.com/drive/folders/1OVMPB9C-W0TuTiSGn5TVA_Eb3mE8lvgh" target="_blank">Barões da Pisadinha 2021</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎸 Pop Rock</h2>
+    <a href="https://drive.google.com/drive/folders/110YE6aWYscpQ_qnpj18E_6UZaqQ6f5fo" target="_blank">MPB Pop Rock</a>
+    <a href="https://drive.google.com/drive/folders/138VHANCnz7JwiaFC8SbF-LVAV9CTFjEJ" target="_blank">Pop Rock nacional 2025</a>
+    </div>
+    
+    <div class="card">
+    <h2>🤠 Sertanejo</h2>
+    <a href="https://drive.google.com/drive/folders/1jGi7O5fKKUuS2w7008gQVaDiJU2qeus2" target="_blank">Atualizadas 2026 top</a>
+    <a href="https://drive.google.com/drive/folders/1wHZ0zVI6pv7p4am470Y6zJTBnDMjaskp" target="_blank">Playbacks 2025 atualizados</a>
+    <a href="https://drive.google.com/drive/folders/1QACQqVfRcdCwV63ZweT8-lsO-JQTKpib" target="_blank">Playback Studio Sertanejo</a>
+    </div>
+    
+    <div class="card">
+    <h2>🪗 Xote e Pé de Serra</h2>
+    <a href="https://drive.google.com/drive/folders/15b6MLSSvogEdEjNxNHYq-7CJgDTaTmoe" target="_blank">Forró Pé de Serra e Xote</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎚️ VS Multipista</h2>
+    <a href="https://drive.google.com/drive/folders/1tV6jgZNRouwrG3feUoVyWY3uNlqKLsxE" target="_blank">Pop Rock Nacional 2025</a>
+    <a href="https://drive.google.com/drive/folders/104OEy_DRSqMSDbk-JVFHISj43wtoV3Ww" target="_blank">Pacote Vs Modão</a>
+    <a href="https://drive.google.com/drive/folders/1uXPRnqAp0_QkE97JixDmeqRUn6FOuuBl" target="_blank">Comunidade Studio</a>
+    <a href="https://drive.google.com/drive/folders/1yx_vd9Hj3d6xq4F4zzunUoUB3an6ZwYT" target="_blank">Pagode Baiano</a>
+    <a href="https://drive.google.com/drive/folders/19NjMcY8Ua559ho9UUAVOgsjVnB788FJ9" target="_blank">MPB 2025</a>
+    <a href="https://drive.google.com/drive/folders/1I7vGNASUzul49shvxOeg79zPotJ84aRQ" target="_blank">VS Abertos Multitrack 2026</a>
+    <a href="https://drive.google.com/drive/folders/1X4gJAl6VMsig5wzYXex4lz0x4-oMPh_F" target="_blank">Clube o VS - Arrasta-pe Forro das Antigas</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎚️ VS LR</h2>
+    <a href="https://drive.google.com/drive/folders/1WPxf-EOk3-0IK4a1eUay9TdDJ-hSnbbh" target="_blank">VS Studio 90.000 Vs Alta Qualidade</a>
+    <a href="https://drive.google.com/drive/folders/1bZ1Ue9Tf5lh45aruXvPpfhIU6Xmzz6eU" target="_blank">VS Pop Rock LR Mixado</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎤 Playback com Letra</h2>
+    <a href="https://drive.google.com/drive/folders/1m9NQS94Iov-Hz22d49dKIVPueeQjDhj-" target="_blank">Videos Karaoke</a>
+    </div>
+    
+    <div class="card">
+    <h2>📘 Tutoriais</h2>
+    <a href="https://youtube.com/watch?v=O9XcYmaZaFg" target="_blank">Instalar Reaper</a>
+    <a href="https://youtube.com/watch?v=dofHgMrjKms" target="_blank">Montar Repertório</a>
+    </div>
+    
+    <div class="card">
+    <h2>🎧 Alterar Tom</h2>
+    <a href="https://youtu.be/4mQ5xuPKSt0" target="_blank">VS Multipista (Celular)</a>
+    <a href="https://youtube.com/watch?v=MTWEAsMnG8w" target="_blank">MP3 Sem Letra</a>
+    <a href="https://youtube.com/watch?v=38kLr9quU2I" target="_blank">Com Letra</a>
+    <a href="https://app.musicspeedchanger.com/" target="_blank">Mudar Tom no PC</a>
+    </div>
+    
+    </div>
+</div>
+
+</body>
+</html>
